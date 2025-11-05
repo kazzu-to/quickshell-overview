@@ -152,12 +152,20 @@ Item {
                             var win = windowByAddress[address]
                             const inWorkspaceGroup = (root.workspaceGroup * root.workspacesShown < win?.workspace?.id && win?.workspace?.id <= (root.workspaceGroup + 1) * root.workspacesShown)
                             return inWorkspaceGroup;
+                        }).sort((a, b) => {
+                            // Sort by stacking order from Hyprland (index in windowList)
+                            const addrA = `0x${a.HyprlandToplevel.address}`
+                            const addrB = `0x${b.HyprlandToplevel.address}`
+                            const indexA = root.windowAddresses.indexOf(addrA)
+                            const indexB = root.windowAddresses.indexOf(addrB)
+                            return indexA - indexB
                         })
                     }
                 }
                 delegate: OverviewWindow {
                     id: window
                     required property var modelData
+                    required property int index
                     property int monitorId: windowData?.monitor
                     property var monitor: HyprlandData.monitors[monitorId]
                     property var address: `0x${modelData.HyprlandToplevel.address}`
@@ -187,7 +195,7 @@ Item {
                         }
                     }
 
-                    z: atInitPosition ? root.windowZ : root.windowDraggingZ
+                    z: atInitPosition ? (root.windowZ + index) : root.windowDraggingZ
                     Drag.hotSpot.x: targetWindowWidth / 2
                     Drag.hotSpot.y: targetWindowHeight / 2
                     MouseArea {
