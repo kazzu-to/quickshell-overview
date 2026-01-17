@@ -149,6 +149,20 @@ Edit `~/.config/quickshell/overview/common/Appearance.qml` to customize:
 - Font families and sizes  
 - Animation curves and durations
 - Border radius values
+##### Use matugen generated colors 
+  - add the below config to `config.toml` in matugen config 
+```toml
+  [templates.quickshell_overview]
+  input_path  = "~/.config/matugen/templates/quickshell-overview.qml"
+  output_path = "~/.config/quickshell/overview/common/Appearance.colors.qml"
+```
+  - paste this [matugen overview template](./quickshell-overview.qml) into your `matugen/templates/` folder
+  - Now set the below show property to `true` in `common/Appearance.qml`
+```qml
+ property QtObject appearance: QtObject {
+            property bool useMatugenColors: false   // change to true to use matugen colors 
+        }
+```
 
 ---
 

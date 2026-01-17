@@ -4,10 +4,13 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import Quickshell
 import "functions"
+import "." as Common
 
 Singleton {
     id: root
-    property QtObject m3colors
+    property QtObject m3colors: Common.Config.options.appearance.useMatugenColors && matugenLoader.item 
+                                 ? matugenLoader.item 
+                                 : defaultColors
     property QtObject animation
     property QtObject animationCurves
     property QtObject colors
@@ -15,7 +18,13 @@ Singleton {
     property QtObject font
     property QtObject sizes
 
-    m3colors: QtObject {
+    Loader {
+        id: matugenLoader
+        active: Common.Config.options.appearance.useMatugenColors
+        source: "Appearance.colors.qml"
+    }
+
+    property QtObject defaultColors: QtObject {
         property bool darkmode: true
         property color m3primary: "#E5B6F2"
         property color m3onPrimary: "#452152"
