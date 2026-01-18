@@ -9,7 +9,7 @@ Singleton {
     
     property QtObject options: QtObject {
         property QtObject appearance: QtObject {
-            property bool useMatugenColors: true
+            property bool useMatugenColors: false
         }
 
         property QtObject overview: QtObject {
