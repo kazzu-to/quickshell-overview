@@ -8,6 +8,10 @@ Singleton {
     id: root
     
     property QtObject options: QtObject {
+        property QtObject appearance: QtObject {
+            property bool useMatugenColors: false
+        }
+
         property QtObject overview: QtObject {
             property int rows: 2
             property int columns: 5
